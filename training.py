@@ -2,7 +2,7 @@
 
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-model_name = "meta-llama/Llama-2-7b"  # Use the appropriate LLaMA 2 model size
+model_name = "meta-llama/Llama-2-7b-hf"  # Use the appropriate LLaMA 2 model size
 model = AutoModelForCausalLM.from_pretrained(model_name)
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
@@ -26,7 +26,7 @@ processed_data = data[['text']]
 
 from transformers import AutoTokenizer
 
-tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b")
+tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-hf")
 
 def tokenize_function(examples):
     return tokenizer(examples["text"], padding="max_length", truncation=True, max_length=512)
@@ -48,7 +48,7 @@ eval_dataset = train_test['test']
 from transformers import AutoModelForCausalLM, Trainer, TrainingArguments
 
 # Load the LLaMA 2 model
-model_name = "meta-llama/Llama-2-7b"
+model_name = "meta-llama/Llama-2-7b-hf"
 model = AutoModelForCausalLM.from_pretrained(model_name)
 
 # Define training arguments
