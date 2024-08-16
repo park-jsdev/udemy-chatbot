@@ -18,7 +18,7 @@ def generate_response(input_text):
     return response
 
 if __name__ == "__main__":
-    print("Welcome to the GPT-2 Chatbot! Type 'x' to quit.")
+    print("Welcome to the Udemy Chatbot! What would you like to learn? Type 'x' to quit.")
     while True:
         input_text = input("You: ")
         if input_text.lower() == "x":

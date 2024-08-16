@@ -19,7 +19,7 @@ train_dataset = train_test_split['train']
 valid_dataset = train_test_split['test']
 
 # Step 2: Tokenization
-tokenizer = AutoTokenizer.from_pretrained("gpt2")
+tokenizer = AutoTokenizer.from_pretrained("gpt2-medium")
 
 # Set pad_token to eos_token
 tokenizer.pad_token = tokenizer.eos_token
@@ -37,16 +37,16 @@ tokenized_valid_dataset = valid_dataset.map(tokenize_function, batched=True)
 gc.collect()  # Run garbage collection
 torch.cuda.empty_cache()  # Free up GPU memory
 
-# Step 3: Load Regular GPT-2 Model
-model = AutoModelForCausalLM.from_pretrained("gpt2")
+# Step 3: Load GPT-2 Medium Model
+model = AutoModelForCausalLM.from_pretrained("gpt2-medium")
 
 # Step 4: Define Training Arguments
 training_args = TrainingArguments(
     output_dir="./results",
     evaluation_strategy="epoch",
     learning_rate=5e-5,
-    per_device_train_batch_size=4,
-    per_device_eval_batch_size=4,
+    per_device_train_batch_size=2,
+    per_device_eval_batch_size=2,
     num_train_epochs=3,
     save_steps=10_000,
     save_total_limit=2,
@@ -66,5 +66,5 @@ trainer = Trainer(
 trainer.train()
 
 # Step 6: Save the Fine-Tuned Model
-model.save_pretrained("./finetuned_gpt2")
-tokenizer.save_pretrained("./finetuned_gpt2")
+model.save_pretrained("./finetuned_gpt2_medium")
+tokenizer.save_pretrained("./finetuned_gpt2_medium")
