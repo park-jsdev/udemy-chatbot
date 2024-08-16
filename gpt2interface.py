@@ -6,22 +6,14 @@ tokenizer = AutoTokenizer.from_pretrained("./finetuned_gpt2")
 
 # Step 7: Test the Model in the Terminal
 def generate_response(input_text):
-    if not input_text.strip():  # Check for empty or whitespace-only input
-        return "Please provide a non-empty input."
-
-    inputs = tokenizer(input_text, return_tensors="pt")
-    
-    # Handle empty inputs by returning an error message or a default response
-    if inputs["input_ids"].shape[-1] == 0:
-        return "Sorry, I didn't catch that. Can you say it again?"
-
+    inputs = tokenizer(input_text, return_tensors="pt", padding=True, truncation=True)
     outputs = model.generate(
         inputs["input_ids"], 
+        attention_mask=inputs["attention_mask"],
         max_length=150, 
-        num_return_sequences=1, 
-        pad_token_id=tokenizer.eos_token_id  # Ensure the pad_token_id is set
+        pad_token_id=tokenizer.eos_token_id,
+        num_return_sequences=1
     )
-    
     response = tokenizer.decode(outputs[0], skip_special_tokens=True)
     return response
 
